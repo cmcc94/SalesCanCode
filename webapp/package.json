@@ -1,0 +1,15 @@
+{
+  "name": "meddic",
+  "version": "1.0.0",
+  "description": "a webiste for sales",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "calvin mcclure",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.19.2"
+  }
+}
