@@ -23,12 +23,16 @@ app.use(express.static("public"));
 //Set ejs as standard no doc type has to be set when rendering ejs files
 app.set("view engine","ejs");
 
+//Accept data in json format
+app.use(express.json());
+
+//Decode data sent through the html form
+app.use(express.urlencoded());
 
 //Set MongoDB Collection
 var wysSchema = new mongoose.Schema({
-    title: String,
-    creator: String,
-    height: Number
+    email: String,
+    password: String,
 });
 
 var form = mongoose.model("form", wysSchema);
@@ -42,11 +46,15 @@ form.create({
 });
 */
 
+/*
+//Async function to print all the data in the mongo db database
 async function testsearch(){
     const test = await form.find({});
     console.log(test);
 }
 testsearch();
+*/
+
 
 //Routes
 app.get("/main", function(req, res){
@@ -63,8 +71,21 @@ app.get("/login", function(req, res){
 app.get("/pgprocess", function(req, res){
     console.log("You have entered the pgprocess site");
     res.render("pgprocess");
+
 });
 
+
+app.post("/login/add", function(req, res){
+    console.log(req.body);
+    console.log(req.body.email);
+
+    form.create({
+        email: req.body.email,
+        password: req.body.password
+    });
+
+    res.render("./main")
+});
 
 app.get("/pictures", function(req, res){
     console.log("entering picture side");
@@ -77,7 +98,6 @@ app.get("/pictures", function(req, res){
     })
 
 })
-
 
 //The error Route has to be at the end or all websites will result in an error
 app.get("*", function(req, res){
